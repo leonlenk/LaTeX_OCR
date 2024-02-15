@@ -1,6 +1,6 @@
 # Hand2LaTeX: Handwriting to LaTeX OCR Project
 
-![Hand2LaTeX]](https://github.com/leonlenk/LaTeX_OCR/assets/38673735/2b66b320-af1d-4ce5-8e96-bd05b28ab052)
+![Hand2LaTeX](https://github.com/leonlenk/LaTeX_OCR/assets/38673735/2b66b320-af1d-4ce5-8e96-bd05b28ab052)
 
 Welcome to Hand2LaTeX, a fun and innovative project that uses the power of PyTorch to convert your handwritten mathematical equations into LaTeX code. No more typing out complex equations! Just write it down, scan it, and let Hand2LaTeX do the rest!
 
