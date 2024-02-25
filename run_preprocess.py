@@ -14,6 +14,7 @@ def run_preprocess():
     img_files = set(os.listdir("img_data"))
     for i in df["name"]:
         assert i in img_files, f"{i} not found in img_data folder"
+    assert len([i for i in df["label"] if '.ink' in i]) == 0, "Some labels are still in .ink format! The XML reading's probably corrupted. Did you add extra folders to the inkml dataset?"
     print("All checks passed.")
 
 if __name__ == "__main__":
