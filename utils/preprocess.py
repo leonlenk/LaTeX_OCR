@@ -65,9 +65,10 @@ def get_gt(inkml_file_abs_path):
     tree = ET.parse(inkml_file_abs_path)
     root = tree.getroot()
     doc_namespace = "{http://www.w3.org/2003/InkML}"
-    annotation = root.findall(doc_namespace + 'annotation')
-    # type truth
-    truth = annotation[0].text
+    annotation = root.find(f".//{doc_namespace}annotation[@type='truth']")
+    if annotation is not None:
+        truth = annotation.text
+    else: raise Exception("No truth annotation found.")
     return truth
 
 def inkml2img(input_path, output_path):
@@ -139,5 +140,5 @@ def ink2img_folder(input_paths, output_path):
                 labels["label"].append(get_gt(inkML_path))
                 labels["name"].append((input_path_safe+file).replace('.','_').replace('_inkml', '.inkml')+'_0.png')
                 inkml2img(inkML_path, output_path)
-            except: print("Error with file: ", file, " in folder: ", input_path, "Don't worry, this is expected.")
+            except: print("Error with file: " + str(file) + " in folder: " + str(input_path) + ". Don't worry, this is expected (though there should only be max 2 or 3!).")
     pd.DataFrame(labels).to_csv(output_path + "labels.csv", index=False)
