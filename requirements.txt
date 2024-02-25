@@ -3,6 +3,8 @@ pandas
 matplotlib
 seaborn
 scikit-learn
-pytorch
+torch
 scikit-image
 opencv-python
+transformers
+torchvision
