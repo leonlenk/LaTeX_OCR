@@ -12,9 +12,25 @@ Welcome to Hand2LaTeX, a fun and innovative project that uses the power of PyTor
 
 ## Installation
 
-To get started with Hand2LaTeX, you'll need to have Python 3.6+ and PyTorch 1.0+ installed. You can then clone this repository and install the local dependencies:
-`git clone Hand2LaTeX`
-`pip install -e .`
+To get started with Hand2LaTeX, you'll need to have Python 3.6+ and PyTorch 1.0+ installed. You can then clone this repository and follow the instructions below to download and preprocess the dataset.
+1. `git clone Hand2LaTeX`
+2. Go to [Kaggle's Handwritten Mathematical Expressions](https://www.kaggle.com/datasets/rtatman/handwritten-mathematical-expressions) and download the dataset. Move `archive.zip` into the `LaTeX_OCR` directory.
+3. Run the following:
+```python
+conda create latexocr
+conda activate latexocr
+pip install -r requirements.txt
+bash ./setup.sh
+```
+You should see `all checks passed` after running `setup.sh`.
+4. Images can be found in `img_data`, and image name / label pairs are in `img_data/labels.csv`.
+
+## Todo:
+- [] BLIP baseline.
+- [] Handwritten text data.
+- [] Additional rendered latex data found at https://zenodo.org/api/records/56198/files-archive.
+
+# Not yet implemented:
 
 ## Usage
 
@@ -22,7 +38,6 @@ Using Hand2LaTeX is as simple as calling a function with your image file:
 
 ```python
 from hand2latex import convert
-
 latex_code = convert('path_to_your_image.png')
 print(latex_code)
 ```
