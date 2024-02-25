@@ -3,6 +3,9 @@ pandas
 matplotlib
 seaborn
 scikit-learn
-pytorch
+torch==2.2.0
 scikit-image
 opencv-python
+transformers
+torchvision
+peft
