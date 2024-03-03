@@ -41,46 +41,8 @@ from PIL import Image
 from torchvision import transforms
 from sklearn.model_selection import train_test_split
 import sklearn as skl
-
-def set_seed(seed):
-    np.random.seed(seed)
-    t.manual_seed(seed)
-    if t.cuda.is_available():
-        t.cuda.manual_seed_all(seed)
-    skl.utils.check_random_state(seed)
-
-class renderedLaTeXDataset(Dataset):
-    def __init__(self, image_folder, lst_file, formulas_file, processor, device = device, cutoff = None):
-        self.image_folder = image_folder
-        self.lst_file = lst_file
-        self.formulas_file = formulas_file
-        self.train_filenames_df = pd.read_csv(self.lst_file, sep=" ", index_col = 0, header = None)
-        self.formulas = open(self.formulas_file, encoding = "ISO-8859-1", newline="\n").readlines()
-        self.processor = processor
-        self.device = device
-        self.cutoff = cutoff if cutoff else len(self.train_filenames_df)
-        if cutoff is not None:
-            self.train_filenames_df = self.train_filenames_df.iloc[:self.cutoff]
-            self.formulas = self.formulas[:self.cutoff]
-        
-    def __len__(self):
-        return self.cutoff
-    
-    def __getitem__(self, idx):
-        img_name = os.path.join(self.image_folder, self.train_filenames_df.iloc[idx, 0] + ".png")
-        image = Image.open(img_name).convert('RGBA')
-        image = crop_to_formula(image)
-        inputs = self.processor(images = image,  padding = "max_length", return_tensors="pt").to(self.device)
-        for key in inputs:
-            inputs[key] = inputs[key].squeeze() # Get rid of batch dimension since the dataloader will batch it for us.
-
-        formula_idx = self.train_filenames_df.iloc[idx].index[0]
-        caption = renderedLaTeXLabelstr2Formula(self.formulas[formula_idx])
-        caption = self.processor.tokenizer.encode(
-            caption, return_tensors="pt", padding = "max_length", max_length = 512, truncation = True, # Tweak this
-            ).to(self.device).squeeze()
-        
-        return inputs, caption
+from data.datasets import renderedLaTeXDataset, set_seed
+from data.dataset_tests import test_renderedLaTeXDataset
     
 import torch as t
 import torch.nn as nn
@@ -105,6 +67,10 @@ val_ds = renderedLaTeXDataset(image_folder = "../formula_images/",
                                 processor = processor)
 train_dl = DataLoader(train_ds, batch_size = BATCH_SIZE, shuffle = SHUFFLE_DATASET, num_workers = 0)
 val_dl = DataLoader(val_ds, batch_size = BATCH_SIZE, shuffle = False, num_workers = 0)
+
+test_renderedLaTeXDataset(train_ds, processor = processor)
+test_renderedLaTeXDataset(val_ds, processor = processor)
+
 print("Number of training samples:", len(train_ds))
 print("Number of validation samples:", len(val_ds))
 
