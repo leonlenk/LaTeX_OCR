@@ -25,7 +25,10 @@ def crop_to_formula(image, padding = 30):
 
 def renderedLaTeXLabelstr2Formula(label: str):
     # We're matching \\label{...whatever} and removing it
-    return re.sub(r"\\label\{[^\}]*\}", "", label)
+    label = re.sub(r"\\label\{[^\}]*\}", "", label)
+    # We match \, and remove it.
+    label = re.sub(r"\\,", "", label)
+    return label
 
 def display_formula(latex: str):
     # Remove \mbox{...} - not supported by the inline MathJax renderer
