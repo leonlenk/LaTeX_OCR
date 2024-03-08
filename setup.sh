@@ -1,3 +1,5 @@
+set -e
+
 unzip archive.zip -d inkML_data
 rm -r inkML_data/trainData_2012_part1/trainData_2012_part1
 rm -r inkML_data/trainData_2012_part2/trainData_2012_part2

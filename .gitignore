@@ -3,6 +3,6 @@ inkML_data/
 img_data/
 *.zip
 files-archive
-__pycache__/
+**/__pycache__/
 formula_images/
 rendered_LaTeX/
