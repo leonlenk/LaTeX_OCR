@@ -49,7 +49,7 @@ Contributions to LaTeX-OCR are welcome! Whether it's bug reports, feature reques
 
 ## License
 
-Hand2LaTeX is licensed under the MIT License. See [LICENSE](LICENSE) for more details.
+LaTeX-OCR is licensed under the MIT License. See [LICENSE](LICENSE) for more details.
 
 ## Acknowledgements
 We thank Professor Bolei Zhou as well as all the members of ACM AI. 
