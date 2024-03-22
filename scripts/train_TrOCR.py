@@ -50,18 +50,29 @@ import torch.nn.functional as F
 from tqdm import tqdm, trange
 
 # Hyperparams
-NUM_EPOCHS = 2
+NUM_EPOCHS = 3
 LEARNING_RATE = 1e-5
 BATCH_SIZE = 4 # 10 gigs of Vram -> 4, <5 gigs of vram -> 2
 SHUFFLE_DATASET = True
 
 set_seed(0)
 optimizer = t.optim.AdamW(model.parameters(), lr=LEARNING_RATE)
+train_transforms = transforms.Compose([
+    transforms.v2.RandomAffine(degrees = 5,
+                               scale = (0.7, 1.1),
+                               shear = 30),
+    transforms.v2.ColorJitter(brightness = 0.2,
+                              contrast = 0.2,
+                              saturation = 0.2,
+                              hue = 0.1)
+])
+
 train_ds = renderedLaTeXDataset(image_folder = "../formula_images/", 
                                 lst_file = "../rendered_LaTeX/processed_im2latex_train.lst", 
                                 formulas_file = "../rendered_LaTeX/im2latex_formulas.lst", 
                                 device = device,
-                                processor = processor)
+                                processor = processor,
+                                transforms = train_transforms)
 val_ds = renderedLaTeXDataset(image_folder = "../formula_images/",
                                 lst_file = "../rendered_LaTeX/processed_im2latex_val.lst",
                                 formulas_file = "../rendered_LaTeX/im2latex_formulas.lst",
