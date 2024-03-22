@@ -67,4 +67,4 @@ Contributions to Hand2LaTeX are welcome! Whether it's bug reports, feature reque
 Hand2LaTeX is licensed under the MIT License. See [LICENSE](LICENSE) for more details.
 
 ## Acknowledgements
-We thank Professor Johnathan Kao as well as all the members of ACM AI. 
+We thank Professor Bolei Zhou as well as all the members of ACM AI. 
