@@ -96,9 +96,9 @@ import torch.nn.functional as F
 from tqdm import tqdm, trange
 
 # Hyperparams
-NUM_EPOCHS = 6
+NUM_EPOCHS = 5
 LEARNING_RATE = 5e-6
-BATCH_SIZE = 8 # 10 gigs of Vram -> 4, <5 gigs of vram -> 2
+BATCH_SIZE = 4 # 10 gigs of Vram -> 4, <5 gigs of vram -> 2
 SHUFFLE_DATASET = True
 
 set_seed(0)
@@ -150,3 +150,6 @@ for epoch in range(NUM_EPOCHS):
 
 model.save_pretrained("../models/trocr-large-finetuned-math-captions")
 processor.save_pretrained("../models/trocr-large-finetuned-math-captions")
+t.save(history, "../models/trocr-large-finetuned-math-captions/history.pt")
+t.save(val_history, "../models/trocr-large-finetuned-math-captions/val_history.pt")
+t.save(val_timesteps, "../models/trocr-large-finetuned-math-captions/val_timesteps.pt")

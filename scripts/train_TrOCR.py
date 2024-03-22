@@ -2,7 +2,7 @@ import torch as t
 import requests
 from PIL import Image
 from transformers import TrOCRProcessor, VisionEncoderDecoderModel
-
+import torchvision.transforms.v2
 import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('--gpu', type=int, default=0)
@@ -50,7 +50,7 @@ import torch.nn.functional as F
 from tqdm import tqdm, trange
 
 # Hyperparams
-NUM_EPOCHS = 3
+NUM_EPOCHS = 2
 LEARNING_RATE = 1e-5
 BATCH_SIZE = 4 # 10 gigs of Vram -> 4, <5 gigs of vram -> 2
 SHUFFLE_DATASET = True
@@ -129,3 +129,6 @@ for epoch in range(NUM_EPOCHS):
 # Save model
 model.save_pretrained("../models/trocr-large-rendered-im2latex")
 processor.save_pretrained("../models/trocr-large-rendered-im2latex")
+t.save(history, "../models/trocr-large-rendered-im2latex/history.pt")
+t.save(val_history, "../models/trocr-large-rendered-im2latex/val_history.pt")
+t.save(val_timesteps, "../models/trocr-large-rendered-im2latex/val_timesteps.pt")
